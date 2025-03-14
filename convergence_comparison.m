@@ -48,3 +48,37 @@ while ei >= 1e-6
     prev_ei = ei;
     i = i + 1;
 end
+%% 3. Fixed Point Iteration
+i = 0;
+x0 = 0.5;
+ei = abs(x0 - r);
+prev_ei = NaN;
+fprintf('\nFixed Point Iteration\n');
+fprintf('%3s %12s %12s %12s %12s\n', 'i', 'xi', 'g(xi)', 'ei', 'ei/ei-1');
+while ei >= 1e-6
+    x1 = g(x0);
+    ei = abs(x1 - r);
+    ratio = ei / prev_ei;
+    fprintf('%3d %12.7f %12.7f %12.7f %12.7f\n', i, x1, g(x1), ei, ratio);
+    x0 = x1;
+    prev_ei = ei;
+    i = i + 1;
+end
+%% 4. Secant Method
+x0 = 0;
+x1 = 0.5;
+ei = abs(x1 - r);
+i = 0;
+prev_ei = NaN;
+fprintf('\nSecant Method\n');
+fprintf('%3s %12s %12s %12s %12s\n', 'i', 'xi', 'g(xi)', 'ei', 'ei/ei-1');
+while ei >= 1e-6
+    x2 = x1 - f(x1) * (x1 - x0) / (f(x1) - f(x0));
+    ei = abs(x2 - r);
+    ratio = ei / prev_ei;
+    fprintf('%3d %12.7f %12.7f %12.7f %12.7f\n', i, x2, f(x2), ei, ratio);
+    x0 = x1;
+    x1 = x2;
+    prev_ei = ei;
+    i = i + 1;
+end
